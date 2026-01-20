@@ -103,21 +103,7 @@ function calculateAverage($participants) {
 <head>
     <meta charset="UTF-8">
     <title>PointyMcPokerFace - Estimate Session</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 40px; }
-        .estimate-buttons button {
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 5px;
-        }
-        .session-id {
-            font-size: 14px;
-            color: #555;
-        }
-        .reveal, .estimates {
-            margin-top: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
 
@@ -127,23 +113,22 @@ function calculateAverage($participants) {
     Share Link: <a href="index.php?session_id=<?= urlencode($sessionId) ?>">Join this session</a>
 </div>
 
-<div class="story-section" style="margin: 30px auto; max-width: 600px;">
+<div class="story-section">
     <h3>Story</h3>
     <?php if ($isLeader): ?>
-        <form method="POST" style="margin-bottom: 10px;">
+        <form method="POST">
             <textarea 
                 name="story" 
                 maxlength="250" 
-                placeholder="Enter story description (max 250 characters)" 
-                style="width: 100%; min-height: 80px; padding: 8px; font-family: sans-serif; font-size: 14px; box-sizing: border-box;"
+                placeholder="Enter story description (max 250 characters)"
             ><?= htmlspecialchars($sessionData['story'] ?? '') ?></textarea>
-            <div style="text-align: right; margin-top: 5px;">
-                <button type="submit" style="padding: 8px 20px;">Update Story</button>
-                <button type="submit" name="clear_story" value="1" style="padding: 8px 20px; margin-left: 5px;">Clear</button>
+            <div class="story-actions">
+                <button type="submit">Update Story</button>
+                <button type="submit" name="clear_story" value="1">Clear</button>
             </div>
         </form>
     <?php else: ?>
-        <div id="story-display" style="border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; min-height: 60px; text-align: left;">
+        <div id="story-display">
             <?= htmlspecialchars($sessionData['story'] ?? '') ?>
         </div>
     <?php endif; ?>
@@ -162,13 +147,13 @@ $currentUserId = session_id();
 ?>
 
 <div class="participants">
-    <h2 style="margin-top: 100px";>Participants</h2>
-    <table style="margin: auto; border-collapse: collapse;">
+    <h2>Participants</h2>
+    <table>
         <thead>
         <tr>
-            <th style="border: 1px solid #ccc; padding: 8px;">Name</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Role</th>
-            <th style="border: 1px solid #ccc; padding: 8px;">Estimate</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Estimate</th>
         </tr>
         </thead>
         <tbody id="participants-body">
@@ -185,9 +170,9 @@ $currentUserId = session_id();
     ?>
     <?php if ($sessionData['revealed']): ?>
         <?php if ($avg !== null): ?>
-            <p style="margin-top: 15px;"><strong>Average Estimate:</strong> <?= $avg ?></p>
+            <p class="average-estimate"><strong>Average Estimate:</strong> <?= $avg ?></p>
         <?php else: ?>
-            <p style="margin-top: 15px;"><strong>Average Estimate:</strong> N/A</p>
+            <p class="average-estimate"><strong>Average Estimate:</strong> N/A</p>
         <?php endif; ?>
     <?php endif; ?>
 
@@ -201,7 +186,7 @@ $currentUserId = session_id();
 <?php endif; ?>
 
 
-<form action="index.php" method="get" style="margin-top: 20px;">
+<form action="index.php" method="get" class="leave-session">
     <button type="submit" onclick="localStorage.clear()">Leave Session</button>
 </form>
 

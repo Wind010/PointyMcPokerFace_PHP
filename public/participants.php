@@ -18,14 +18,14 @@ foreach ($sessionData['participants'] as $id => $data):
     $name = htmlspecialchars($data['name'] ?? 'Unknown');
     $estimate = $data['estimate'] ?? null;
 ?>
-    <tr style="<?= $isCurrent ? 'background-color: #eef;' : '' ?>">
-        <td style="border: 1px solid #ccc; padding: 8px;">
+    <tr class="<?= $isCurrent ? 'current-user' : '' ?>">
+        <td>
             <?= $name ?> <?= $isCurrent ? "(You)" : "" ?>
         </td>
-        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+        <td style="text-align: center;">
             <?= $isSessionLeader ? 'Leader' : 'Participant' ?>
         </td>
-        <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
+        <td style="text-align: center;">
             <?php if ($sessionData['revealed']): ?>
                 <?= $estimate ?? 'No estimate' ?>
             <?php else: ?>

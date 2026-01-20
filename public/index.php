@@ -20,28 +20,7 @@ $prefillSessionId = $_GET['session_id'] ?? '';
 <head>
     <meta charset="UTF-8">
     <title>PointyMcPokerFace</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 5px;
-        }
-
-        .container {
-            max-width: 400px;
-            margin: auto;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
 <div class="container">

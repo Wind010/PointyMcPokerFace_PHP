@@ -1,0 +1,206 @@
+/* PointyMcPokerFace Theme Variables */
+:root {
+    /* Colors */
+    --primary-color: #007bff;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --secondary-text-color: #555555;
+    --border-color: #cccccc;
+    --highlight-background: #eef;
+    --story-background: #f9f9f9;
+    --button-background: #f0f0f0;
+    --button-hover: #e0e0e0;
+    --link-color: #007bff;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 8px;
+    --spacing-md: 10px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    --spacing-2xl: 40px;
+    --spacing-3xl: 50px;
+    
+    /* Typography */
+    --font-family: sans-serif;
+    --font-size-base: 16px;
+    --font-size-sm: 14px;
+    --font-size-lg: 18px;
+    
+    /* Border Radius */
+    --border-radius: 4px;
+    
+    /* Other */
+    --max-width-container: 400px;
+    --max-width-story: 600px;
+}
+
+/* Global Styles */
+body {
+    font-family: var(--font-family);
+    text-align: center;
+    margin-top: var(--spacing-2xl);
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Headings */
+h1 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-color);
+}
+
+h2 {
+    margin-top: 100px;
+    color: var(--text-color);
+}
+
+h3 {
+    color: var(--text-color);
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Forms and Inputs */
+input[type="text"],
+input[type="password"] {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+    margin: var(--spacing-xs);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+}
+
+textarea {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+}
+
+/* Buttons */
+button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    margin: var(--spacing-xs);
+    background-color: var(--button-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-family: var(--font-family);
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+/* Container */
+.container {
+    max-width: var(--max-width-container);
+    margin: auto;
+}
+
+/* Session ID Info */
+.session-id {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-text-color);
+}
+
+/* Story Section */
+.story-section {
+    margin: var(--spacing-xl) auto;
+    max-width: var(--max-width-story);
+}
+
+.story-section textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    box-sizing: border-box;
+}
+
+.story-section .story-actions {
+    text-align: right;
+    margin-top: var(--spacing-xs);
+}
+
+.story-section .story-actions button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+#story-display {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    background-color: var(--story-background);
+    min-height: 60px;
+    text-align: left;
+    border-radius: var(--border-radius);
+}
+
+/* Estimate Buttons */
+.estimate-buttons button {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-xs);
+}
+
+/* Participants Table */
+.participants {
+    margin-top: var(--spacing-xl);
+}
+
+.participants table {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.participants th,
+.participants td {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm);
+}
+
+.participants th {
+    background-color: var(--story-background);
+    font-weight: bold;
+}
+
+.participants .current-user {
+    background-color: var(--highlight-background);
+}
+
+/* Reveal Section */
+.reveal {
+    margin-top: var(--spacing-xl);
+}
+
+.estimates {
+    margin-top: var(--spacing-xl);
+}
+
+/* Average Display */
+.average-estimate {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Horizontal Rule */
+hr {
+    margin: var(--spacing-lg) 0;
+    border: none;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Leave Button */
+.leave-session {
+    margin-top: var(--spacing-lg);
+}
