@@ -59,6 +59,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset']) && $isLeader
     exit;
 }
 
+// Handle story update (leader only)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['story']) && $isLeader) {
+    $story = substr(trim($_POST['story']), 0, 250); // Enforce 250 char limit
+    $sessionData['story'] = $story;
+    file_put_contents($sessionFile, json_encode($sessionData, JSON_PRETTY_PRINT));
+    header("Location: estimate.php?session_id=$sessionId");
+    exit;
+}
+
+// Handle story clear (leader only)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_story']) && $isLeader) {
+    $sessionData['story'] = '';
+    file_put_contents($sessionFile, json_encode($sessionData, JSON_PRETTY_PRINT));
+    header("Location: estimate.php?session_id=$sessionId");
+    exit;
+}
+
+// Handle next estimate (leader only) - resets estimates and clears story
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['next_estimate']) && $isLeader) {
+    foreach ($sessionData['participants'] as &$participant) {
+        $participant['estimate'] = null;
+    }
+    unset($participant); // break reference
+    $sessionData['revealed'] = false;
+    $sessionData['story'] = '';
+    file_put_contents($sessionFile, json_encode($sessionData, JSON_PRETTY_PRINT));
+    header("Location: estimate.php?session_id=$sessionId");
+    exit;
+}
+
 // Calculate estimates and average
 function calculateAverage($participants) {
     $estimates = array_column($participants, 'estimate');
@@ -95,6 +125,28 @@ function calculateAverage($participants) {
 <div class="session-id">
     Session ID: <strong><?= htmlspecialchars($sessionId) ?></strong><br>
     Share Link: <a href="index.php?session_id=<?= urlencode($sessionId) ?>">Join this session</a>
+</div>
+
+<div class="story-section" style="margin: 30px auto; max-width: 600px;">
+    <h3>Story</h3>
+    <?php if ($isLeader): ?>
+        <form method="POST" style="margin-bottom: 10px;">
+            <textarea 
+                name="story" 
+                maxlength="250" 
+                placeholder="Enter story description (max 250 characters)" 
+                style="width: 100%; min-height: 80px; padding: 8px; font-family: sans-serif; font-size: 14px; box-sizing: border-box;"
+            ><?= htmlspecialchars($sessionData['story'] ?? '') ?></textarea>
+            <div style="text-align: right; margin-top: 5px;">
+                <button type="submit" style="padding: 8px 20px;">Update Story</button>
+                <button type="submit" name="clear_story" value="1" style="padding: 8px 20px; margin-left: 5px;">Clear</button>
+            </div>
+        </form>
+    <?php else: ?>
+        <div id="story-display" style="border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; min-height: 60px; text-align: left;">
+            <?= htmlspecialchars($sessionData['story'] ?? '') ?>
+        </div>
+    <?php endif; ?>
 </div>
 
 <form method="POST">
@@ -143,6 +195,7 @@ $currentUserId = session_id();
         <form method="POST">
             <button type="submit" name="reveal" value="1">Reveal Estimates</button>
             <button type="submit" name="reset" value="1">Reset Estimations</button>
+            <button type="submit" name="next_estimate" value="1">Next Estimate</button>
         </form>
     </div>
 <?php endif; ?>
@@ -156,6 +209,10 @@ $currentUserId = session_id();
 
 <script>
     refreshParticipants();
+    <?php if (!$isLeader): ?>
+    refreshStory();
+    <?php endif; ?>
+
     function refreshParticipants() {
         fetch("participants.php?session_id=<?= urlencode($sessionId) ?>")
             .then(response => response.text())
@@ -164,7 +221,22 @@ $currentUserId = session_id();
             });
     }
 
+    <?php if (!$isLeader): ?>
+    function refreshStory() {
+        fetch("story.php?session_id=<?= urlencode($sessionId) ?>")
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById("story-display").textContent = text;
+            });
+    }
+    <?php endif; ?>
+
     // Refresh every 5 seconds
-    setInterval(refreshParticipants, 5000);
+    setInterval(function() {
+        refreshParticipants();
+        <?php if (!$isLeader): ?>
+        refreshStory();
+        <?php endif; ?>
+    }, 5000);
 </script>
 </html>

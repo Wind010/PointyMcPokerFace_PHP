@@ -37,7 +37,8 @@ if ($action === 'create') {
                 'vote' => null
             ]
         ],
-        'revealed' => false
+        'revealed' => false,
+        'story' => ''
     ];
 
     file_put_contents($sessionFile, json_encode($sessionData, JSON_PRETTY_PRINT));
